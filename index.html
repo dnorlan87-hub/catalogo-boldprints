@@ -227,14 +227,15 @@
     }
 
     .gallery-grid {
-  display: flex;
+  display: flex;            /* Alinea miniaturas en línea */
   gap: 12px;
   margin-top: 16px;
-  overflow-x: auto; /* Scroll habilitado */
-  overflow-y: hidden;
+  overflow-x: auto;         /* ACTIVA el scroll horizontal */
+  overflow-y: hidden;       /* Evita scroll vertical innecesario */
   padding: 10px 5px;
   scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch; /* Suavidad en móviles */
+  -webkit-overflow-scrolling: touch; /* Suavidad en iPhone/Android */
+  width: 100%;              /* Ocupa todo el ancho disponible */
 }
 
     .gallery-grid::-webkit-scrollbar {
@@ -255,7 +256,7 @@
       background: #94a3b8;
     }
     .thumb {
-  flex: 0 0 110px; /* Evita que las miniaturas se encojan */
+  flex: 0 0 110px;          /* ¡ESTO ES LO MÁS IMPORTANTE! Evita que se encojan */
   border: 1px solid var(--line);
   border-radius: 14px;
   padding: 10px;
@@ -264,6 +265,7 @@
   transition: .2s ease;
   text-align: center;
   font-size: 11px;
+  min-height: 126px;        /* Mantiene altura uniforme */
 }
     .thumb:hover, .thumb.active {
       border-color: var(--dark);
@@ -272,10 +274,10 @@
     }
     .thumb-img {
   width: 100%; 
-  height: 80px; /* Un poco más de aire */
+  height: 80px;             /* Altura fija para la miniatura */
   margin-bottom: 8px; 
   border-radius: 12px;
-  display: flex; /* Cambiado de grid a flex */
+  display: flex;            /* Usamos flex para centrar la imagen */
   justify-content: center;
   align-items: center;
   border: 1px solid var(--line); 
