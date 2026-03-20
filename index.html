@@ -153,10 +153,10 @@
     .muted { color: var(--muted); font-size: 14px; }
 
     .preview-layout {
-      display: flex; /* Cambiamos de grid a flex */
-      flex-direction: column; /* Ponemos los elementos en columna */
-      align-items: center; /* Centramos todo horizontalmente */
-      gap: 18px; /* Espacio entre los elementos */
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 18px;
+      align-items: start;
     }
     .asset-rail { display: flex; flex-direction: column; gap: 12px; }
     .asset-card {
@@ -166,11 +166,6 @@
       background: #fff;
       padding: 10px;
       cursor: pointer;
-    }
-    @media (max-width: 980px) {
-      .preview-layout {
-        flex-direction: column-reverse; /* En móvil, ponemos la galería abajo de la taza */
-      }
     }
     .asset-card img { width: 100%; display: block; border-radius: 10px; object-fit: contain; background: #fafafa; }
     .asset-label { display: block; font-size: 12px; margin-top: 8px; color: var(--muted); text-align: center; font-weight: 700; }
@@ -227,15 +222,14 @@
     }
 
     .gallery-grid {
-  display: flex;            /* Alinea miniaturas en línea */
+  display: flex;
   gap: 12px;
   margin-top: 16px;
-  overflow-x: auto;         /* ACTIVA el scroll horizontal */
-  overflow-y: hidden;       /* Evita scroll vertical innecesario */
+  overflow-x: auto; /* Scroll habilitado */
+  overflow-y: hidden;
   padding: 10px 5px;
   scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch; /* Suavidad en iPhone/Android */
-  width: 100%;              /* Ocupa todo el ancho disponible */
+  -webkit-overflow-scrolling: touch; /* Suavidad en móviles */
 }
 
     .gallery-grid::-webkit-scrollbar {
@@ -256,7 +250,7 @@
       background: #94a3b8;
     }
     .thumb {
-  flex: 0 0 110px;          /* ¡ESTO ES LO MÁS IMPORTANTE! Evita que se encojan */
+  flex: 0 0 110px; /* Evita que las miniaturas se encojan */
   border: 1px solid var(--line);
   border-radius: 14px;
   padding: 10px;
@@ -265,7 +259,6 @@
   transition: .2s ease;
   text-align: center;
   font-size: 11px;
-  min-height: 126px;        /* Mantiene altura uniforme */
 }
     .thumb:hover, .thumb.active {
       border-color: var(--dark);
@@ -274,10 +267,10 @@
     }
     .thumb-img {
   width: 100%; 
-  height: 80px;             /* Altura fija para la miniatura */
+  height: 80px; /* Un poco más de aire */
   margin-bottom: 8px; 
   border-radius: 12px;
-  display: flex;            /* Usamos flex para centrar la imagen */
+  display: flex; /* Cambiado de grid a flex */
   justify-content: center;
   align-items: center;
   border: 1px solid var(--line); 
@@ -779,11 +772,6 @@
       { name: 'Goku y Vegueta', keyword: 'Goku Vegueta', subcategory: 'Anime', image: 'img/goku.png', price: 350, products: ['Camisetas'] },
       { name: 'Huntrix Stage', keyword: 'huntrix stage', subcategory: 'Huntrix', image: 'img/diseno3.png', price: 460, products: ['Camisetas', 'Mousepads'] },
       { name: 'Capibara Love', keyword: 'capibara capybara', subcategory: 'Capibara', image: 'img/taza-capibara-love1.jpg', price: 100, products: ['Tazas'], mugMockup: 'img/taza-capibara-love1.jpg' },
-      { name: 'Capibara Love', keyword: 'capibara capybara', subcategory: 'Capibara', image: 'img/taza-capibara-love2.jpg', price: 100, products: ['Tazas'], mugMockup: 'img/taza-capibara-love2.jpg' },
-      { name: 'Capibara Love', keyword: 'capibara capybara', subcategory: 'Capibara', image: 'img/taza-capibara-love3.jpg', price: 100, products: ['Tazas'], mugMockup: 'img/taza-capibara-love3.jpg' },
-    { name: 'Capibara Love', keyword: 'capibara capybara', subcategory: 'Capibara', image: 'img/taza-capibara-love4.jpg', price: 100, products: ['Tazas'], mugMockup: 'img/taza-capibara-love4.jpg' },
-      { name: 'Capibara Love', keyword: 'capibara capybara', subcategory: 'Capibara', image: 'img/taza-capibara-love5.jpg', price: 100, products: ['Tazas'], mugMockup: 'img/taza-capibara-love5.jpg' },
-      { name: 'Capibara Love', keyword: 'capibara capybara', subcategory: 'Capibara', image: 'img/taza-capibara-love6.jpg', price: 100, products: ['Tazas'], mugMockup: 'img/taza-capibara-love6.jpg' },
       { name: 'Jujutsu Kaisen Gojo', keyword: 'jujutsu kaisen gojo anime', subcategory: 'Anime', image: 'img/diseno6.png', price: 450, products: ['Camisetas', 'Tazas', 'Mousepads', 'Tazas mágicas', 'Rompecabezas'] },
       { name: 'Flork Mood', keyword: 'flork frases', subcategory: 'Frases', image: 'img/diseno8.png', price: 100, products: ['Tazas', 'Camisetas'] }
     ];
