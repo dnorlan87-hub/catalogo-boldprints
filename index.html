@@ -877,9 +877,10 @@
     function addCurrentProductToCart() {
       const details = getPriceDetails();
       cart.push({
+        code: state.design ? state.design.code : 'S/C',
         product: currentProduct,
         category: currentSubcategory,
-        design: state.design ? state.design.name : 'Sin diseño',
+        design: state.design ? state.design.name : 'Personalizado',
         image: state.design ? state.design.image : baseImage.src,
         color: currentProduct === 'Tazas' ? 'Blanco' : state.color,
         detailLine: getCurrentSummaryLine(),
@@ -895,14 +896,22 @@
       return `Hola, quiero pedir un producto de sublimación.%0A- Producto: ${currentProduct}%0A- Categoría: ${currentSubcategory}%0A- Diseño: ${state.design ? state.design.name : ''}%0A- Color: ${currentProduct === 'Tazas' ? 'Blanco' : state.color}%0A- ${getCurrentSummaryLine()}%0A- Cantidad: ${state.quantity}%0A- Precio: C$ ${details.totalPrice}`;
     }
 
-    function buildCartText() {
-      if (!cart.length) return buildOrderText();
-      const lines = cart.map((item, index) =>
-        `${index + 1}. ${item.product} - ${item.design}\n   ${item.detailLine}\n   Color: ${item.color}\n   Cantidad: ${item.quantity}\n   Precio: C$ ${item.total}`
-      );
-      const total = cart.reduce((sum, item) => sum + item.total, 0);
-      return `Hola, quiero pedir estos productos de sublimación:%0A%0A${lines.join('%0A%0A').replace(/\n/g, '%0A')}%0A%0ATotal carrito: C$ ${total}`;
-    }
+   function buildOrderText() {
+  if (cart.length > 0) {
+    const lines = cart.map((item, index) => 
+      // Aquí añadimos el [CÓDIGO] al inicio de la línea
+      `${index + 1}. [${item.code}] ${item.product} - ${item.design}\n   Color: ${item.color} | ${item.detailLine}\n   Cant: ${item.quantity} | Total: C$ ${item.total}`
+    );
+    const totalGeneral = cart.reduce((sum, item) => sum + item.total, 0);
+    
+    return `Hola Bold Prints! Pedido de Carrito:%0A%0A${lines.join('%0A%0A').replace(/\n/g, '%0A')}%0A%0A*Total: C$ ${totalGeneral}*`;
+  } 
+
+  // Si es pedido directo de un solo producto
+  const details = getPriceDetails();
+  const itemCode = state.design ? state.design.code : 'Personalizado';
+  return `Hola Bold Prints! Pedido Directo:%0A- Código: [${itemCode}]%0A- Producto: ${currentProduct}%0A- Diseño: ${state.design ? state.design.name : 'Personalizado'}%0A- Color: ${state.color}%0A- Cantidad: ${state.quantity}%0A- *Total: C$ ${details.totalPrice}*`;
+}
 
     function renderCart() {
       const total = cart.reduce((sum, item) => sum + item.total, 0);
