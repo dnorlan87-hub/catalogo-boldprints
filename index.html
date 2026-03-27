@@ -152,12 +152,54 @@
     }
     .muted { color: var(--muted); font-size: 14px; }
 
-    .preview-layout {
-      display: grid;
-      grid-template-columns: 140px 1fr;
-      gap: 18px;
-      align-items: start;
-    }
+    .preview-layout { /* ESTO CENTRARÁ LA TAZA */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centra todo horizontalmente */
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
+}
+
+/* ESTO ACTIVARÁ EL SCROLL HORIZONTAL */
+.gallery-grid {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+  overflow-x: auto; /* Permite el scroll */
+  overflow-y: hidden;
+  padding: 10px 5px;
+  width: 100%; /* Ocupa todo el ancho */
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch; /* Suavidad en móviles */
+}
+
+/* OBLIGA A LAS MINIATURAS A NO ENCOGERSE */
+.thumb {
+  flex: 0 0 110px; /* El secreto: 0 0 significa que NO se encogen */
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 10px;
+  background: #fff;
+  cursor: pointer;
+  text-align: center;
+}
+
+.thumb-img {
+  width: 100%;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background: #fff;
+}
+
+.thumb-img img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain; /* Para que la taza se vea completa en la miniatura */
+}
     .asset-rail { display: flex; flex-direction: column; gap: 12px; }
     .asset-card {
       position: relative;
@@ -1111,6 +1153,17 @@
       qtyHint.textContent = details.byDozenPromo ? `Promoción docena: C$ 80 c/u` : `Precio unitario: C$ ${details.unitPrice}`;
 
       summary.innerHTML = `
+        <div style="background: #f0f4ff; padding: 10px; border-radius: 12px; margin-bottom: 10px; border: 1px solid #dbeafe;">
+      <strong style="color: #1e40af;">CÓDIGO: ${state.design ? state.design.code : 'S/C'}</strong>
+    </div>
+    <strong>Resumen del pedido</strong><br>
+    Producto: ${currentProduct}<br>
+    Diseño: ${state.design ? state.design.name : 'N/A'}<br>
+    Color: ${currentProduct === 'Tazas' ? 'Blanco' : state.color}<br>
+    ${getCurrentSummaryLine()}<br>
+    Cantidad: ${state.quantity}<br>
+    Total: C$ ${getPriceDetails().totalPrice}
+  `;
         <strong>Resumen</strong><br>
         ${currentProduct} - ${currentSubcategory}<br>
         Diseño: ${state.design ? state.design.name : 'N/A'}<br>
