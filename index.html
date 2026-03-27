@@ -3,112 +3,567 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bold Prints Nicaragua - Catálogo</title>
+  <title>Bold Prints Nicaragua</title>
   <style>
     :root {
-      --bg: #f6f7fb; --card: #ffffff; --text: #1f2937; --muted: #6b7280;
-      --line: #e5e7eb; --dark: #111827; --soft: #f3f4f6; --accent: #2563eb;
+      --bg: #f6f7fb;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --line: #e5e7eb;
+      --dark: #111827;
+      --soft: #f3f4f6;
     }
     * { box-sizing: border-box; }
-    body { margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); color: var(--text); }
+    body { margin: 0; font-family: Arial, Helvetica, sans-serif; background: var(--bg); color: var(--text); }
     .wrap { max-width: 1320px; margin: 0 auto; padding: 20px; }
 
-    /* HEADER */
-    .header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; margin-bottom: 20px; }
-    .brand-wrap { display: flex; align-items: center; gap: 14px; }
-    .brand-logo { width: 65px; height: 65px; border-radius: 12px; object-fit: cover; border: 1px solid var(--line); }
-    .search-box { background: #fff; border: 2px solid var(--line); border-radius: 12px; padding: 8px 14px; display: flex; align-items: center; min-width: 300px; }
-    .search-box input { border: 0; outline: none; width: 100%; padding: 5px; }
-    .search-box button { border: 0; background: transparent; cursor: pointer; font-size: 18px; }
+    .header {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .brand-logo {
+      width: 72px;
+      height: 72px;
+      object-fit: cover;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: #fff;
+      box-shadow: 0 8px 20px rgba(0,0,0,.08);
+      flex-shrink: 0;
+    }
+    .brand h1 { margin: 0 0 6px; font-size: 34px; }
+    .brand p { margin: 0; color: var(--muted); }
+    .search-box {
+      width: min(420px, 100%);
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .search-box input {
+      border: 0;
+      outline: none;
+      width: 100%;
+      font-size: 15px;
+      background: transparent;
+    }
 
-    /* NAVEGACIÓN */
-    .nav-shell { background: #fff; border-radius: 16px; padding: 15px; margin-bottom: 20px; border: 1px solid var(--line); }
-    .nav-top { display: flex; flex-wrap: wrap; gap: 10px; }
+    .nav-shell {
+      background: #efefef;
+      border-radius: 22px;
+      padding: 18px 20px;
+      margin-bottom: 22px;
+      position: relative;
+    }
+    .nav-top {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
     .menu-item { position: relative; }
-    .menu-btn { border: 1px solid var(--line); background: #fff; border-radius: 50px; padding: 8px 16px; font-weight: 600; cursor: pointer; }
+    .menu-btn {
+      border: 0;
+      background: #fff;
+      color: var(--dark);
+      border-radius: 999px;
+      padding: 10px 16px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,.05);
+    }
     .menu-btn.active { background: var(--dark); color: #fff; }
     .dropdown {
-      position: absolute; top: 110%; left: 0; min-width: 220px; background: #fff;
-      border: 1px solid var(--line); border-radius: 12px; padding: 12px; display: none; z-index: 999;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+      position: absolute;
+      top: calc(100% + 10px);
+      left: 0;
+      min-width: 240px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 14px;
+      box-shadow: 0 20px 40px rgba(0,0,0,.12);
+      display: none;
+      z-index: 999;
     }
     .menu-item.open .dropdown { display: block; }
-    .subcat-btn { border: 0; background: transparent; display: block; width: 100%; text-align: left; padding: 6px 0; cursor: pointer; font-size: 14px; }
-    .subcat-btn.active { font-weight: 800; color: var(--accent); }
+    .dropdown h4 {
+      margin: 0 0 10px;
+      font-size: 12px;
+      text-transform: uppercase;
+      color: var(--muted);
+      letter-spacing: .3px;
+    }
+    .dropdown-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 14px;
+    }
+    .subcat-btn {
+      border: 0;
+      background: transparent;
+      text-align: left;
+      padding: 0;
+      font-size: 14px;
+      color: #374151;
+      cursor: pointer;
+    }
+    .subcat-btn:hover,
+    .subcat-btn.active { color: var(--dark); font-weight: 700; }
 
-    /* LAYOUT PRINCIPAL */
-    .layout { display: grid; grid-template-columns: 1fr 400px; gap: 24px; }
-    .card { background: #fff; border-radius: 20px; border: 1px solid var(--line); padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
+    .layout {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 24px;
+      align-items: start;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      box-shadow: 0 10px 28px rgba(0,0,0,.06);
+      overflow: hidden;
+    }
+    .preview, .panel, .results-card { padding: 22px; }
 
-    /* VISTA PREVIA - CORRECCIÓN DE CENTRADO */
-    .preview-layout {
+    .section-head {
       display: flex;
-      flex-direction: column;
+      justify-content: space-between;
       align-items: center;
-      justify-content: center;
-      width: 100%;
+      gap: 12px;
+      margin-bottom: 14px;
     }
+    .section-head h2, .section-head h3 {
+      margin: 0;
+      font-size: 24px;
+    }
+    .muted { color: var(--muted); font-size: 14px; }
+
+    .preview-layout {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 18px;
+      align-items: start;
+    }
+    .asset-rail { display: flex; flex-direction: column; gap: 12px; }
+    .asset-card {
+      position: relative;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #fff;
+      padding: 10px;
+      cursor: pointer;
+    }
+    .asset-card img { width: 100%; display: block; border-radius: 10px; object-fit: contain; background: #fafafa; }
+    .asset-label { display: block; font-size: 12px; margin-top: 8px; color: var(--muted); text-align: center; font-weight: 700; }
+    .asset-zoom {
+      position: absolute;
+      left: 118%; top: 50%; transform: translateY(-50%) scale(.96);
+      width: 220px; padding: 12px; border-radius: 18px; border: 1px solid var(--line);
+      background: #fff; box-shadow: 0 18px 36px rgba(0,0,0,.16);
+      opacity: 0; visibility: hidden; transition: .2s ease; pointer-events: none; z-index: 5;
+    }
+    .asset-card:hover .asset-zoom { opacity: 1; visibility: visible; transform: translateY(-50%) scale(1); }
+    .asset-zoom img { width: 100%; max-height: 220px; object-fit: contain; }
+
     .stage {
-      position: relative; width: 100%; max-width: 500px; aspect-ratio: 1/1;
-      display: flex; justify-content: center; align-items: center; background: #fff;
+      position: relative;
+      width: 100%;
+      border-radius: 18px;
+      background: linear-gradient(180deg, #ffffff 0%, #f0f2f7 100%);
+      border: 1px solid var(--line);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
     }
-    #baseImage { max-width: 100%; max-height: 100%; object-fit: contain; }
-    
+    .product-shell {
+      position: relative;
+      width: 70%;
+      max-width: 400px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .base-real { width: 100%;
+      display: block;
+      object-fit: contain;
+      object-position: center; filter: drop-shadow(0 18px 22px rgba(0,0,0,.14)); }
     .design-overlay {
-      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-      pointer-events: none; z-index: 2; display: flex; justify-content: center; align-items: center;
+  position: absolute;
+  width: 26%; 
+  height: 26%; 
+  top: 50%; 
+  left: 50%; 
+  transform: translate(-50%, -50%); /* Ajustado para centrar X e Y */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+  z-index: 2;
+}
+    #designImage {
+      width: 100%; height: 100%; object-fit: contain; display: block;
+      opacity: 0.88; mix-blend-mode: multiply; filter: saturate(0.95) contrast(0.95);
     }
-    #designImage { width: 100%; height: 100%; object-fit: contain; mix-blend-mode: multiply; opacity: 0.9; }
 
-    /* GALERÍA CON SCROLL HORIZONTAL */
     .gallery-grid {
-      display: flex; gap: 12px; margin-top: 20px; overflow-x: auto; 
-      padding: 10px 5px; width: 100%; scroll-behavior: smooth;
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+  overflow-x: auto; /* Scroll habilitado */
+  overflow-y: hidden;
+  padding: 10px 5px;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch; /* Suavidad en móviles */
+}
+
+    .gallery-grid::-webkit-scrollbar {
+      width: 8px;
     }
-    .gallery-grid::-webkit-scrollbar { height: 6px; }
-    .gallery-grid::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
-    
+
+    .gallery-grid::-webkit-scrollbar-track {
+      background: #f3f4f6;
+      border-radius: 999px;
+    }
+
+    .gallery-grid::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 999px;
+    }
+
+    .gallery-grid::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
     .thumb {
-      flex: 0 0 115px; /* Evita que se encojan */
-      border: 1px solid var(--line); border-radius: 12px; padding: 10px; cursor: pointer; background: #fff; text-align: center;
+  flex: 0 0 110px; /* Evita que las miniaturas se encojan */
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 10px;
+  background: #fff;
+  cursor: pointer;
+  transition: .2s ease;
+  text-align: center;
+  font-size: 11px;
+}
+    .thumb:hover, .thumb.active {
+      border-color: var(--dark);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 18px rgba(0,0,0,.08);
     }
-    .thumb.active { border-color: var(--dark); border-width: 2px; }
-    .thumb-img { width: 100%; height: 80px; display: flex; justify-content: center; align-items: center; overflow: hidden; margin-bottom: 6px; }
-    .thumb-img img { max-width: 100%; max-height: 100%; object-fit: contain; }
-    .thumb .code-label { font-size: 10px; font-weight: 800; color: var(--accent); display: block; }
-    .thumb .name-label { font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; }
+    .thumb-img {
+  width: 100%; 
+  height: 80px; /* Un poco más de aire */
+  margin-bottom: 8px; 
+  border-radius: 12px;
+  display: flex; /* Cambiado de grid a flex */
+  justify-content: center;
+  align-items: center;
+  border: 1px solid var(--line); 
+  overflow: hidden; 
+  background: #fff;
+}
+    .thumb-img img { 
+  max-width: 100%; 
+  max-height: 100%; 
+  object-fit: contain; /* Esto evita que se corte la imagen */
+}
 
-    /* CARRITO Y PRECIOS */
-    .cart-bar { background: var(--dark); color: #fff; border-radius: 14px; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-    .price { font-size: 32px; font-weight: 800; margin: 15px 0; color: var(--dark); }
-    .summary-box { background: var(--soft); padding: 15px; border-radius: 12px; font-size: 14px; line-height: 1.6; margin-bottom: 15px; border: 1px dashed #cbd5e1; }
-    .option-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 15px; }
-    .size-btn, .swatch { border: 1px solid var(--line); background: #fff; padding: 8px 12px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 600; }
-    .size-btn.active, .swatch.active { background: var(--dark); color: #fff; }
+    .product-pills, .option-row { display: flex; flex-wrap: wrap; gap: 10px; }
+    .pill, .swatch, .size-btn {
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 999px;
+      padding: 10px 14px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .pill.active, .swatch.active, .size-btn.active { background: var(--dark); color: #fff; border-color: var(--dark); }
+    .swatch-dot { width: 14px; height: 14px; border-radius: 50%; display: inline-block; margin-right: 8px; vertical-align: middle; border: 1px solid rgba(0,0,0,.14); }
+    .price { font-size: 28px; font-weight: 700; margin: 8px 0 18px; }
+    .summary { background: #f9fafb; border: 1px dashed #d1d5db; border-radius: 16px; padding: 14px; margin-top: 18px; font-size: 14px; line-height: 1.6; }
+    .actions { display: flex; gap: 10px; margin-top: 18px; flex-wrap: wrap; }
+    .floating-whatsapp {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      z-index: 1000;
+      background: #25D366;
+      color: #fff;
+      border: 0;
+      border-radius: 999px;
+      padding: 14px 18px;
+      font-weight: 700;
+      box-shadow: 0 14px 30px rgba(37, 211, 102, .28);
+      cursor: pointer;
+    }
 
-    .btn { border: 0; border-radius: 10px; padding: 14px; font-weight: 700; cursor: pointer; width: 100%; margin-bottom: 10px; }
+    .cart-bar {
+      position: relative;
+      z-index: 1;
+      margin-bottom: 16px;
+      background: #111827;
+      color: #fff;
+      border-radius: 18px;
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .cart-meta {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      align-items: center;
+      font-size: 14px;
+    }
+
+    .cart-btn {
+      border: 0;
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .cart-btn.light {
+      background: #fff;
+      color: #111827;
+    }
+
+    .cart-btn.ghost {
+      background: rgba(255,255,255,.14);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,.2);
+    }
+
+    .cart-list {
+      margin-top: 14px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .cart-item {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 12px;
+      display: grid;
+      grid-template-columns: 62px 1fr auto;
+      gap: 12px;
+      align-items: center;
+      background: #fff;
+    }
+
+    .cart-item img {
+      width: 62px;
+      height: 62px;
+      object-fit: contain;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+    }
+
+    .cart-item small {
+      color: var(--muted);
+      display: block;
+      line-height: 1.45;
+    }
+
+    .cart-remove {
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 999px;
+      padding: 8px 10px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+    .btn { border: 0; border-radius: 14px; padding: 13px 16px; cursor: pointer; font-weight: 700; }
     .btn-primary { background: var(--dark); color: #fff; }
-    .btn-cart { background: #fff; color: var(--dark); border: 1px solid var(--dark); }
-    .floating-whatsapp { position: fixed; right: 20px; bottom: 20px; background: #25D366; color: #fff; border: 0; border-radius: 50px; padding: 15px 25px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.2); z-index: 1000; }
+    .btn-secondary { background: #eef2ff; color: var(--dark); border: 1px solid #c7d2fe; }
 
-    @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } .header { flex-direction: column; align-items: flex-start; } .search-box { width: 100%; } }
+    .search-results {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .result-item {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 12px;
+      background: #fff;
+      cursor: pointer;
+      transition: .2s ease;
+    }
+    .result-item:hover { border-color: var(--dark); transform: translateY(-1px); box-shadow: 0 10px 22px rgba(0,0,0,.08); }
+    .result-head { display: flex; gap: 10px; align-items: center; margin-bottom: 10px; }
+    .result-head img { width: 58px; height: 58px; object-fit: contain; border: 1px solid var(--line); border-radius: 12px; background: #fff; }
+    .result-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag {
+      font-size: 12px; padding: 6px 8px; border-radius: 999px; background: var(--soft); color: #374151;
+    }
+
+    .design-sheet {
+      margin-top: 16px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: linear-gradient(180deg, #ffffff 0%, #fafbff 100%);
+      padding: 18px;
+      box-shadow: 0 12px 28px rgba(0,0,0,.06);
+    }
+    .sheet-head {
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+    .sheet-head img {
+      width: 110px;
+      height: 110px;
+      object-fit: contain;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: #fff;
+      padding: 8px;
+    }
+    .sheet-head h4 {
+      margin: 0 0 6px;
+      font-size: 22px;
+    }
+    .sheet-meta {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .sheet-products {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .sheet-product {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: #fff;
+      padding: 14px;
+      cursor: pointer;
+      transition: .2s ease;
+    }
+    .sheet-product:hover {
+      border-color: var(--dark);
+      transform: translateY(-1px);
+      box-shadow: 0 10px 22px rgba(0,0,0,.08);
+    }
+    .sheet-product-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+    .sheet-product h5 {
+      margin: 0;
+      font-size: 16px;
+    }
+    .mini-pill {
+      font-size: 11px;
+      padding: 5px 8px;
+      border-radius: 999px;
+      background: #eef2ff;
+      color: #3730a3;
+      font-weight: 700;
+    }
+    .sheet-product p {
+      margin: 0 0 10px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .sheet-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .sheet-btn {
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 999px;
+      padding: 8px 10px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    .sheet-btn.primary {
+      background: var(--dark);
+      color: #fff;
+      border-color: var(--dark);
+    }
+
+    .empty-state {
+      border: 1px dashed #d1d5db;
+      border-radius: 18px;
+      padding: 20px;
+      color: var(--muted);
+      background: #fff;
+      margin-top: 12px;
+    }
+
+    @media (max-width: 980px) {
+      .header, .layout, .preview-layout { grid-template-columns: 1fr; }
+      .category-grid, .gallery-grid, .search-results, .sheet-products { grid-template-columns: repeat(2, 1fr); }
+      .asset-rail { flex-direction: row; overflow-x: auto; }
+      .asset-card { min-width: 130px; }
+      .asset-zoom, .dropdown { display: none !important; }
+      .nav-top { display: grid; grid-template-columns: 1fr 1fr; }
+      .search-box { width: 100%; }
+      .sheet-head { grid-template-columns: 1fr; }
+    }
+    img {
+      -webkit-user-drag: none;
+      user-select: none;
+      -webkit-user-select: none;
+      pointer-events: none;
+    }
+
+    .thumb,
+    .asset-card,
+    .result-item,
+    .sheet-product,
+    .stage {
+      pointer-events: auto;
+    }
   </style>
 </head>
 <body>
-
   <div class="wrap">
     <div class="header">
       <div class="brand-wrap">
-        <img class="brand-logo" src="img/logo.jpg" alt="Logo">
-        <div>
-          <h1 style="margin:0; font-size: 24px;">Bold Prints Nicaragua</h1>
-          <p style="margin:0; color: var(--muted); font-size: 14px;">Personalización de alta calidad</p>
+        <img class="brand-logo" src="img/logo.jpg" alt="Bold Prints Nicaragua">
+        <div class="brand">
+          <h1>Bold Prints Nicaragua</h1>
+          <p>Explora productos, categorías y diseños disponibles en camisetas, tazas, mousepads, tazas mágicas, rompecabezas, macetitas y recordatorios.</p>
         </div>
       </div>
-      <div class="search-box">
-        <input id="searchInput" type="text" placeholder="Buscar por código o nombre..." />
-        <button id="searchButton" type="button">🔎</button>
-      </div>
+      <form id="searchForm" class="search-box">
+        <button id="searchButton" type="submit" style="border:0;background:transparent;cursor:pointer;font-size:18px;line-height:1;">🔎</button>
+        <input id="searchInput" type="text" placeholder="Buscar diseños, por ejemplo: capibara, anime, Huntrix..." />
+      </form>
     </div>
 
     <div class="nav-shell">
@@ -116,205 +571,640 @@
     </div>
 
     <div class="cart-bar">
-      <div><strong>CARRITO:</strong> <span id="cartCount">0</span> productos - <span id="cartTotal">C$ 0</span></div>
-      <div id="cartStatus" style="font-size: 12px; opacity: 0.8;">Lista para enviar</div>
+      <div class="cart-meta">
+        <strong>Carrito</strong>
+        <span id="cartCount">0 producto(s)</span>
+        <span id="cartTotal">C$ 0</span>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <button class="cart-btn light" id="addToCartBtn" type="button">Agregar al carrito</button>
+        <button class="cart-btn ghost" id="sendCartBtn" type="button">Enviar carrito por WhatsApp</button>
+      </div>
     </div>
 
     <div class="layout">
-      <div class="card">
-        <div class="preview-layout">
-          <div class="stage">
-            <img id="baseImage" src="img/camiseta-blanca.png">
-            <div class="design-overlay" id="designOverlay">
-              <img id="designImage" src="">
-            </div>
+      <div class="card preview">
+        <div class="section-head">
+          <div>
+            <h2 id="mainTitle">Vista previa del producto</h2>
+            <div class="muted" id="mainSubtitle">Selecciona producto, categoría y diseño</div>
           </div>
         </div>
-        <div class="gallery-grid" id="designGallery"></div>
+
+        <div class="preview-layout">
+          <div class="asset-rail">
+            <div class="asset-card">
+              <img id="productThumb" src="img/camiseta-blanca.png" alt="Producto">
+              <span class="asset-label">Producto</span>
+              <div class="asset-zoom"><img id="productZoom" src="img/camiseta-blanca.png" alt="Zoom producto"></div>
+            </div>
+            <div class="asset-card">
+              <img id="designThumb" src="img/diseno1.png" alt="Diseño">
+              <span class="asset-label">Diseño</span>
+              <div class="asset-zoom"><img id="designZoom" src="img/diseno1.png" alt="Zoom diseño"></div>
+            </div>
+          </div>
+
+          <div>
+            <div class="stage">
+              <div class="product-shell">
+                <img id="baseImage" class="base-real" src="img/camiseta-blanca.png" alt="Producto">
+                <div class="design-overlay" id="designOverlay">
+                  <img id="designImage" src="img/diseno1.png" alt="Diseño aplicado">
+                </div>
+              </div>
+            </div>
+            <div class="gallery-grid" id="designGallery"></div>
+          </div>
+        </div>
       </div>
 
-      <div class="card">
-        <h3 id="mainTitle">Configuración</h3>
-        <p id="currentRoute" style="color:var(--muted); font-size:13px;"></p>
-        
-        <div class="summary-box" id="summary">
-          Selecciona un diseño para ver los detalles.
+      <div>
+        <div class="card panel">
+          <div class="section-head">
+            <h3>Configuración</h3>
+            <div class="muted" id="currentRoute">Camisetas / Huntrix</div>
+          </div>
+
+          <div style="margin-bottom:18px;">
+            <div class="muted" style="margin-bottom:8px;">Producto</div>
+            <div class="product-pills" id="productPills"></div>
+          </div>
+
+          <div style="margin-bottom:18px;">
+            <div class="muted" style="margin-bottom:8px;">Diseño seleccionado</div>
+            <div class="product-pills" id="selectedDesignLabel"></div>
+          </div>
+
+          <div style="margin-bottom:18px;">
+            <div class="muted" style="margin-bottom:8px;">Color</div>
+            <div class="option-row" id="colorOptions"></div>
+          </div>
+
+          <div style="margin-bottom:18px;">
+            <div class="muted" id="sizeLabel" style="margin-bottom:8px;">Talla</div>
+            <div class="option-row" id="sizeOptions"></div>
+          </div>
+
+          <div style="margin-bottom:18px;">
+            <div class="muted" style="margin-bottom:8px;">Cantidad</div>
+            <div class="option-row" style="align-items:center;">
+              <button class="size-btn" id="qtyMinus" type="button">-</button>
+              <input
+                id="qtyInput"
+                type="number"
+                min="1"
+                value="1"
+                style="width:90px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;font-size:14px;"
+              >
+              <button class="size-btn" id="qtyPlus" type="button">+</button>
+            </div>
+            <div class="muted" id="qtyHint" style="margin-top:8px;">Precio unitario según producto y color.</div>
+          </div>
+
+          <div class="price" id="price">C$ 450</div>
+          <div class="summary" id="summary"></div>
+
+          <div class="actions">
+            <button class="btn btn-primary" id="whatsappBtn">Pedir por WhatsApp</button>
+            <button class="btn btn-secondary" id="copyBtn">Copiar pedido</button>
+          </div>
+
+          <div class="cart-list" id="cartList"></div>
         </div>
 
-        <div>
-          <p style="font-weight:700; font-size:14px; margin-bottom:8px;">Talla / Tamaño:</p>
-          <div class="option-row" id="sizeOptions"></div>
+        <div class="card results-card" style="margin-top:18px;">
+          <div class="section-head">
+            <div>
+              <h3>Resultados de búsqueda</h3>
+              <div class="muted">Busca por diseño o temática y te mostraré en qué productos está disponible.</div>
+            </div>
+          </div>
+          <div id="searchResultsWrap">
+            <div class="empty-state">Escribe algo como <strong>capibara</strong>, <strong>anime</strong> o <strong>Huntrix</strong> para ver diseños y productos disponibles.</div>
+          </div>
         </div>
-
-        <div>
-          <p style="font-weight:700; font-size:14px; margin-bottom:8px;">Color Base:</p>
-          <div class="option-row" id="colorOptions"></div>
-        </div>
-
-        <div class="price" id="priceLabel">C$ 0</div>
-        
-        <button class="btn btn-cart" id="addToCartBtn">Agregar al Carrito</button>
-        <button class="btn btn-primary" id="whatsappBtn">Pedir Ahora por WhatsApp</button>
-        <button class="btn" id="sendCartBtn" style="background:#25D366; color:#fff;">Enviar Carrito Completo</button>
       </div>
     </div>
   </div>
-
-  <button class="floating-whatsapp" id="floatingWhatsappBtn">Chatear con nosotros</button>
+  <button class="floating-whatsapp" id="floatingWhatsappBtn" type="button">WhatsApp</button>
 
   <script>
-    // --- BASE DE DATOS (Agrega aquí tus códigos) ---
     const productCatalog = {
       'Camisetas': {
-        base: { colors: { 'Blanco': 'img/camiseta-blanca.png', 'Negro': 'img/camiseta-negra.png' } },
-        designStyle: { width: '35%', height: '30%', top: '42%', left: '50%' },
-        categories: ['Huntrix', 'Anime', 'Capibara']
+        base: {
+          default: 'img/camiseta-blanca.png',
+          colors: {
+            'Blanco': 'img/camiseta-blanca.png',
+            'Negro': 'img/camiseta-negra.png',
+            'Rosado': 'img/camiseta-rosada.png'
+          }
+        },
+        designStyle: { width: '35%', height: '30%', top: '25%', left: '50%' },
+        categories: {
+          'Entretenimiento': ['Anime', 'Caricaturas', 'Deportes', 'Música', 'Películas', 'Series', 'Videojuegos'],
+          'Por temporada': ['Año Nuevo', 'Halloween', 'Navidad', 'Día del Amor y la Amistad'],
+          'Eventos sociales': ['Cumpleaños', 'Boda', 'Graduación', 'Baby Shower'],
+          'Populares': ['Huntrix', 'Capibara', 'Princesas', 'Superhéroes'],
+          'Escolares': ['Para colorear', 'Tablas de multiplicar'],
+          'Otras temáticas': ['Animales', 'Frases', 'Urbanos', 'Mascotas']
+        }
       },
       'Tazas': {
-        base: { colors: { 'Blanco': 'img/taza-blanca.png' } },
-        designStyle: { width: '0%', height: '0%', top: '0%', left: '0%' }, // No overlay para tazas completas
-        categories: ['Capibara', 'Frases']
+        base: { default: '', colors: { 'Único': '' } },
+        designStyle: { width: '34%', height: '34%', top: '43%', left: '49%' },
+        categories: {
+          'Entretenimiento': ['Anime', 'Caricaturas', 'Música', 'Series'],
+          'Por temporada': ['Navidad', 'Halloween', 'Día de las Madres'],
+          'Populares': ['Huntrix', 'Capibara', 'Flork', 'Frases'],
+          'Otras temáticas': ['Animales', 'Comida', 'Profesiones', 'Signos Zodiacales']
+        }
+      },
+      'Mousepads': {
+        base: { default: 'img/mousepad.png', colors: { 'Único': 'img/mousepad.png' } },
+        designStyle: { width: '62%', height: '28%', top: '50%', left: '50%' },
+        categories: {
+          'Entretenimiento': ['Anime', 'Videojuegos', 'Series'],
+          'Populares': ['Huntrix', 'Capibara', 'Superhéroes'],
+          'Otras temáticas': ['Urbanos', 'Frases', 'Animales']
+        }
+      },
+      'Tazas mágicas': {
+        base: { default: 'img/taza-magica.png', colors: { 'Negro': 'img/taza-magica.png' } },
+        designStyle: { width: '34%', height: '34%', top: '43%', left: '49%' },
+        categories: {
+          'Entretenimiento': ['Anime', 'Películas', 'Series'],
+          'Populares': ['Huntrix', 'Capibara', 'Frases'],
+          'Por temporada': ['Navidad', 'Día del Amor y la Amistad']
+        }
+      },
+      'Rompecabezas': {
+        base: { default: 'img/rompecabezas.png', colors: { 'Único': 'img/rompecabezas.png' } },
+        designStyle: { width: '58%', height: '40%', top: '50%', left: '50%' },
+        categories: {
+          'Entretenimiento': ['Anime', 'Caricaturas'],
+          'Eventos sociales': ['Cumpleaños', 'Boda'],
+          'Populares': ['Capibara', 'Huntrix', 'Princesas']
+        }
+      },
+      'Macetitas': {
+        base: { default: 'img/macetita.png', colors: { 'Blanco': 'img/macetita.png' } },
+        designStyle: { width: '26%', height: '20%', top: '56%', left: '50%' },
+        categories: {
+          'Populares': ['Capibara', 'Frases', 'Animales'],
+          'Por temporada': ['Día de las Madres', 'Navidad'],
+          'Otras temáticas': ['Mascotas', 'Profesiones']
+        }
+      },
+      'Recordatorios': {
+        base: { default: 'img/recordatorio.png', colors: { 'Único': 'img/recordatorio.png' } },
+        designStyle: { width: '54%', height: '54%', top: '50%', left: '50%' },
+        categories: {
+          'Eventos sociales': ['Bautizo', 'Baby Shower', 'Boda', 'Graduación', 'XV Años'],
+          'Escolares': ['Para colorear'],
+          'Otras temáticas': ['Religión', 'Frases']
+        }
       }
     };
 
     const designsDB = [
-      { code: 'HNT-01', name: 'Huntrix Neon', subcategory: 'Huntrix', image: 'img/diseno1.png', price: 450, products: ['Camisetas'] },
-      { code: 'CAP-01', name: 'Capibara Love 1', subcategory: 'Capibara', image: 'img/taza-capibara-love1.jpg', price: 150, products: ['Tazas'] },
-      { code: 'CAP-02', name: 'Capibara Love 2', subcategory: 'Capibara', image: 'img/taza-capibara-love2.jpg', price: 150, products: ['Tazas'] },
-      { code: 'CAP-03', name: 'Capibara Love 3', subcategory: 'Capibara', image: 'img/taza-capibara-love3.jpg', price: 150, products: ['Tazas'] },
-      { code: 'CAP-04', name: 'Capibara Love 4', subcategory: 'Capibara', image: 'img/taza-capibara-love4.jpg', price: 150, products: ['Tazas'] },
-      { code: 'ANM-01', name: 'Gojo Satoru', subcategory: 'Anime', image: 'img/diseno6.png', price: 450, products: ['Camisetas'] }
+      { name: 'Huntrix Neon', keyword: 'huntrix neon', subcategory: 'Huntrix', image: 'img/diseno1.png', price: 450, products: ['Camisetas', 'Tazas', 'Mousepads', 'Tazas mágicas'] },
+      { name: 'Goku y Vegueta', keyword: 'Goku Vegueta', subcategory: 'Anime', image: 'img/goku.png', price: 350, products: ['Camisetas'] },
+      { name: 'Huntrix Stage', keyword: 'huntrix stage', subcategory: 'Huntrix', image: 'img/diseno3.png', price: 460, products: ['Camisetas', 'Mousepads'] },
+      { name: 'Capibara Love', keyword: 'capibara capybara', subcategory: 'Capibara', image: 'img/taza-capibara-love1.jpg', price: 100, products: ['Tazas'], mugMockup: 'img/taza-capibara-love1.jpg' },
+      { name: 'Jujutsu Kaisen Gojo', keyword: 'jujutsu kaisen gojo anime', subcategory: 'Anime', image: 'img/diseno6.png', price: 450, products: ['Camisetas', 'Tazas', 'Mousepads', 'Tazas mágicas', 'Rompecabezas'] },
+      { name: 'Flork Mood', keyword: 'flork frases', subcategory: 'Frases', image: 'img/diseno8.png', price: 100, products: ['Tazas', 'Camisetas'] }
     ];
 
-    let state = { product: 'Camisetas', sub: 'Huntrix', design: designsDB[0], color: 'Blanco', size: 'M', qty: 1 };
+    const sizes = ['XS', 'S', 'M', 'L', 'XL'];
+    let currentProduct = 'Camisetas';
+    let currentSubcategory = 'Huntrix';
+    let visibleDesigns = [];
     let cart = [];
 
-    // --- RENDERIZADO ---
-    function renderAll() {
-      const config = productCatalog[state.product];
-      
-      // Menú
-      const menuContainer = document.getElementById('productMenus');
-      menuContainer.innerHTML = Object.keys(productCatalog).map(p => `
-        <div class="menu-item ${state.product === p ? 'open' : ''}">
-          <button class="menu-btn ${state.product === p ? 'active' : ''}" onclick="changeProduct('${p}')">${p}</button>
-          <div class="dropdown">
-            ${productCatalog[p].categories.map(c => `<button class="subcat-btn ${state.sub === c && state.product === p ? 'active' : ''}" onclick="changeSub('${p}', '${c}')">${c}</button>`).join('')}
+    const state = {
+      color: 'Blanco',
+      size: 'M',
+      quantity: 1,
+      design: null
+    };
+
+    const productMenus = document.getElementById('productMenus');
+    const productPills = document.getElementById('productPills');
+    const colorOptions = document.getElementById('colorOptions');
+    const sizeOptions = document.getElementById('sizeOptions');
+    const designGallery = document.getElementById('designGallery');
+    const selectedDesignLabel = document.getElementById('selectedDesignLabel');
+    const baseImage = document.getElementById('baseImage');
+    const productThumb = document.getElementById('productThumb');
+    const productZoom = document.getElementById('productZoom');
+    const designImage = document.getElementById('designImage');
+    const designThumb = document.getElementById('designThumb');
+    const designZoom = document.getElementById('designZoom');
+    const designOverlay = document.getElementById('designOverlay');
+    const mainTitle = document.getElementById('mainTitle');
+    const mainSubtitle = document.getElementById('mainSubtitle');
+    const currentRoute = document.getElementById('currentRoute');
+    const price = document.getElementById('price');
+    const summary = document.getElementById('summary');
+    const qtyInput = document.getElementById('qtyInput');
+    const qtyMinus = document.getElementById('qtyMinus');
+    const qtyPlus = document.getElementById('qtyPlus');
+    const qtyHint = document.getElementById('qtyHint');
+    const searchInput = document.getElementById('searchInput');
+    const searchButton = document.getElementById('searchButton');
+    const searchForm = document.getElementById('searchForm');
+    const searchResultsWrap = document.getElementById('searchResultsWrap');
+    const whatsappBtn = document.getElementById('whatsappBtn');
+    const copyBtn = document.getElementById('copyBtn');
+    const addToCartBtn = document.getElementById('addToCartBtn');
+    const sendCartBtn = document.getElementById('sendCartBtn');
+    const floatingWhatsappBtn = document.getElementById('floatingWhatsappBtn');
+    const cartCount = document.getElementById('cartCount');
+    const cartTotal = document.getElementById('cartTotal');
+    const cartList = document.getElementById('cartList');
+
+    function getProductConfig(product) {
+      return productCatalog[product];
+    }
+
+    function getDesignsForCurrentSelection() {
+      return designsDB.filter(d => d.subcategory === currentSubcategory && d.products.includes(currentProduct));
+    }
+
+    function ensureActiveDesign() {
+      visibleDesigns = getDesignsForCurrentSelection();
+      if (!visibleDesigns.length) {
+        visibleDesigns = designsDB.filter(d => d.products.includes(currentProduct)).slice(0, 4);
+      }
+      if (!state.design || !visibleDesigns.some(d => d.name === state.design.name)) {
+        state.design = visibleDesigns[0] || designsDB[0];
+      }
+    }
+
+    // --- FUNCIONES CORREGIDAS ---
+
+    function getUnitPrice() {
+      if (currentProduct === 'Camisetas') {
+        if (state.quantity >= 12) return 80;
+        if (state.color === 'Negro') return 350;
+        if (state.color === 'Blanco') return 200;
+        if (state.color === 'Rosado') return 250;
+      }
+      return state.design ? state.design.price : 0;
+    }
+
+    function getPriceDetails() {
+      const quantity = Math.max(1, Number(state.quantity) || 1);
+      const unitPrice = getUnitPrice();
+      const totalPrice = unitPrice * quantity;
+      return {
+        quantity,
+        unitPrice,
+        totalPrice,
+        byDozenPromo: currentProduct === 'Camisetas' && quantity >= 12
+      };
+    }
+
+    function getCurrentPrice() {
+      return getPriceDetails().totalPrice;
+    }
+
+    function getCurrentSummaryLine() {
+      return currentProduct === 'Tazas' ? 'Tamaño: 11 oz' : 'Talla: ' + state.size;
+    }
+
+    function addCurrentProductToCart() {
+      const details = getPriceDetails();
+      cart.push({
+        product: currentProduct,
+        category: currentSubcategory,
+        design: state.design ? state.design.name : 'Sin diseño',
+        image: state.design ? state.design.image : baseImage.src,
+        color: currentProduct === 'Tazas' ? 'Blanco' : state.color,
+        detailLine: getCurrentSummaryLine(),
+        quantity: state.quantity,
+        unitPrice: details.unitPrice,
+        total: details.totalPrice
+      });
+      renderCart();
+    }
+
+    function buildOrderText() {
+      const details = getPriceDetails();
+      return `Hola, quiero pedir un producto de sublimación.%0A- Producto: ${currentProduct}%0A- Categoría: ${currentSubcategory}%0A- Diseño: ${state.design ? state.design.name : ''}%0A- Color: ${currentProduct === 'Tazas' ? 'Blanco' : state.color}%0A- ${getCurrentSummaryLine()}%0A- Cantidad: ${state.quantity}%0A- Precio: C$ ${details.totalPrice}`;
+    }
+
+    function buildCartText() {
+      if (!cart.length) return buildOrderText();
+      const lines = cart.map((item, index) =>
+        `${index + 1}. ${item.product} - ${item.design}\n   ${item.detailLine}\n   Color: ${item.color}\n   Cantidad: ${item.quantity}\n   Precio: C$ ${item.total}`
+      );
+      const total = cart.reduce((sum, item) => sum + item.total, 0);
+      return `Hola, quiero pedir estos productos de sublimación:%0A%0A${lines.join('%0A%0A').replace(/\n/g, '%0A')}%0A%0ATotal carrito: C$ ${total}`;
+    }
+
+    function renderCart() {
+      const total = cart.reduce((sum, item) => sum + item.total, 0);
+      cartCount.textContent = `${cart.length} producto(s)`;
+      cartTotal.textContent = `C$ ${total}`;
+
+      if (!cart.length) {
+        cartList.innerHTML = `<div class="empty-state" style="margin-top:0;">Agrega productos al carrito para enviarlos todos juntos.</div>`;
+        return;
+      }
+
+      cartList.innerHTML = cart.map((item, index) => `
+        <div class="cart-item">
+          <img src="${item.image}" alt="${item.design}">
+          <div>
+            <strong>${item.product} · ${item.design}</strong>
+            <small>${item.detailLine}</small>
+            <small>Color: ${item.color} · Cantidad: ${item.quantity} · Total: C$ ${item.total}</small>
           </div>
+          <button class="cart-remove" type="button" onclick="removeFromCart(${index})">Eliminar</button>
         </div>
       `).join('');
+    }
 
-      // Galería con Código
-      const gallery = document.getElementById('designGallery');
-      const filtered = designsDB.filter(d => d.subcategory === state.sub && d.products.includes(state.product));
-      gallery.innerHTML = filtered.map(d => `
-        <div class="thumb ${state.design.code === d.code ? 'active' : ''}" onclick="selectDesign('${d.code}')">
-          <div class="thumb-img"><img src="${d.image}"></div>
-          <span class="code-label">${d.code}</span>
-          <span class="name-label">${d.name}</span>
-        </div>
-      `).join('');
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      renderCart();
+    }
 
-      // Opciones
-      document.getElementById('sizeOptions').innerHTML = (state.product === 'Tazas' ? ['11 oz'] : ['S','M','L','XL']).map(s => `<button class="size-btn ${state.size === s ? 'active' : ''}" onclick="state.size='${s}'; renderAll()">${s}</button>`).join('');
-      document.getElementById('colorOptions').innerHTML = Object.keys(config.base.colors).map(c => `<button class="swatch ${state.color === c ? 'active' : ''}" onclick="state.color='${c}'; renderAll()">${c}</button>`).join('');
+    // --- FIN DE CORRECCIONES PRINCIPALES ---
 
-      updatePreview();
+    function renderMenus() {
+      productMenus.innerHTML = '';
+      Object.entries(productCatalog).forEach(([product, config]) => {
+        const item = document.createElement('div');
+        item.className = 'menu-item' + (product === currentProduct ? ' open' : '');
+        const groupsHtml = Object.entries(config.categories).map(([group, subcats]) => `
+          <div style="margin-bottom:12px;">
+            <h4>${group}</h4>
+            <div class="dropdown-grid">
+              ${subcats.map(sub => `<button class="subcat-btn ${product === currentProduct && sub === currentSubcategory ? 'active' : ''}" type="button" data-product="${product}" data-sub="${sub}">${sub}</button>`).join('')}
+            </div>
+          </div>
+        `).join('');
+        item.innerHTML = `
+          <button class="menu-btn ${product === currentProduct ? 'active' : ''}" type="button" data-product-main="${product}">${product}</button>
+          <div class="dropdown">${groupsHtml}</div>
+        `;
+        productMenus.appendChild(item);
+      });
+
+      productMenus.querySelectorAll('[data-product-main]').forEach(btn => {
+        btn.addEventListener('click', (event) => {
+          event.stopPropagation();
+          const product = btn.dataset.productMain;
+          const parent = btn.closest('.menu-item');
+          const wasOpen = parent.classList.contains('open');
+          productMenus.querySelectorAll('.menu-item').forEach(item => item.classList.remove('open'));
+          if (!wasOpen) parent.classList.add('open');
+
+          currentProduct = product;
+          const firstGroup = Object.values(productCatalog[currentProduct].categories)[0];
+          currentSubcategory = firstGroup[0];
+          const firstColor = Object.keys(productCatalog[currentProduct].base.colors)[0];
+          state.color = firstColor;
+          ensureActiveDesign();
+          renderAll(false);
+        });
+      });
+
+      productMenus.querySelectorAll('.subcat-btn').forEach(btn => {
+        btn.addEventListener('click', (event) => {
+          event.stopPropagation();
+          currentProduct = btn.dataset.product;
+          currentSubcategory = btn.dataset.sub;
+          const firstColor = Object.keys(productCatalog[currentProduct].base.colors)[0];
+          state.color = firstColor;
+          ensureActiveDesign();
+          renderAll(false);
+        });
+      });
+    }
+
+    function renderProductPills() {
+      productPills.innerHTML = '';
+      Object.keys(productCatalog).forEach(product => {
+        const btn = document.createElement('button');
+        btn.className = 'pill' + (product === currentProduct ? ' active' : '');
+        btn.textContent = product;
+        btn.onclick = () => {
+          currentProduct = product;
+          const firstGroup = Object.values(productCatalog[currentProduct].categories)[0];
+          currentSubcategory = firstGroup[0];
+          state.color = Object.keys(productCatalog[currentProduct].base.colors)[0];
+          ensureActiveDesign();
+          renderAll();
+        };
+        productPills.appendChild(btn);
+      });
+    }
+
+    function renderColors() {
+      colorOptions.innerHTML = '';
+      if (currentProduct === 'Tazas') {
+        colorOptions.innerHTML = `<span class="tag">Blanco</span>`;
+        return;
+      }
+      const colors = getProductConfig(currentProduct).base.colors;
+      Object.keys(colors).forEach(colorName => {
+        const btn = document.createElement('button');
+        btn.className = 'swatch' + (state.color === colorName ? ' active' : '');
+        const sample = colorName === 'Negro' ? '#111827' : colorName === 'Rosado' ? '#f9a8d4' : '#f9fafb';
+        btn.innerHTML = `<span class="swatch-dot" style="background:${sample}"></span>${colorName}`;
+        btn.onclick = () => {
+          state.color = colorName;
+          renderColors();
+          updatePreview();
+        };
+        colorOptions.appendChild(btn);
+      });
+    }
+
+    function renderSizes() {
+      sizeOptions.innerHTML = '';
+      const sizeLabel = document.getElementById('sizeLabel');
+      if (currentProduct === 'Tazas') {
+        sizeLabel.textContent = 'Tamaño';
+        sizeOptions.innerHTML = `<span class="tag">11 oz</span>`;
+        return;
+      }
+      sizeLabel.textContent = 'Talla';
+      sizes.forEach(size => {
+        const btn = document.createElement('button');
+        btn.className = 'size-btn' + (state.size === size ? ' active' : '');
+        btn.textContent = size;
+        btn.onclick = () => {
+          state.size = size;
+          renderSizes();
+          updatePreview();
+        };
+        sizeOptions.appendChild(btn);
+      });
+    }
+
+    function renderGallery() {
+      designGallery.innerHTML = '';
+      visibleDesigns.forEach(design => {
+        const thumb = document.createElement('button');
+        thumb.className = 'thumb' + (state.design && state.design.name === design.name ? ' active' : '');
+        thumb.innerHTML = `
+          <div class="thumb-img"><img src="${design.image}" alt="${design.name}"></div>
+          ${design.name}
+        `;
+        thumb.onclick = () => {
+          state.design = design;
+          renderGallery();
+          updatePreview();
+          renderSelectedDesignLabel();
+        };
+        designGallery.appendChild(thumb);
+      });
+    }
+
+    function renderSelectedDesignLabel() {
+      selectedDesignLabel.innerHTML = `<span class="tag">${state.design ? state.design.name : 'Sin diseño'}</span>`;
     }
 
     function updatePreview() {
-      const config = productCatalog[state.product];
-      const designOverlay = document.getElementById('designOverlay');
-      
-      // Imagen Principal
-      if (state.product === 'Tazas') {
-        document.getElementById('baseImage').src = state.design.image;
-        designOverlay.style.display = 'none';
-      } else {
-        document.getElementById('baseImage').src = config.base.colors[state.color];
-        document.getElementById('designImage').src = state.design.image;
-        designOverlay.style.display = 'flex';
-        designOverlay.style.width = config.designStyle.width;
-        designOverlay.style.height = config.designStyle.height;
-        designOverlay.style.top = config.designStyle.top;
-        designOverlay.style.left = config.designStyle.left;
+      const config = getProductConfig(currentProduct);
+      let baseSrc = config.base.colors[state.color] || config.base.default;
+      if (currentProduct === 'Tazas' && state.design && state.design.mugMockup) {
+        baseSrc = state.design.mugMockup;
+      }
+      baseImage.src = baseSrc || '';
+      productThumb.src = baseSrc || '';
+      productZoom.src = baseSrc || '';
+
+      if (state.design) {
+        designImage.src = state.design.image;
+        designThumb.src = state.design.image;
+        designZoom.src = state.design.image;
       }
 
-      // Resumen con Código
-      document.getElementById('priceLabel').innerText = `C$ ${state.design.price}`;
-      document.getElementById('summary').innerHTML = `
-        <strong style="color:var(--accent)">CÓDIGO: [${state.design.code}]</strong><br>
-        <strong>Producto:</strong> ${state.product}<br>
-        <strong>Diseño:</strong> ${state.design.name}<br>
-        <strong>Color:</strong> ${state.color} | <strong>Talla:</strong> ${state.size}
+      designOverlay.style.display = (currentProduct === 'Tazas' && state.design && state.design.mugMockup) ? 'none' : 'grid';
+
+      const details = getPriceDetails();
+      price.textContent = `C$ ${details.totalPrice}`;
+      qtyHint.textContent = details.byDozenPromo ? `Promoción docena: C$ 80 c/u` : `Precio unitario: C$ ${details.unitPrice}`;
+
+      summary.innerHTML = `
+        <strong>Resumen</strong><br>
+        ${currentProduct} - ${currentSubcategory}<br>
+        Diseño: ${state.design ? state.design.name : 'N/A'}<br>
+        Color: ${state.color} | ${getCurrentSummaryLine()}<br>
+        Cantidad: ${state.quantity} | Total: C$ ${details.totalPrice}
       `;
+
+      applyProductStyle();
+      mainTitle.textContent = currentProduct;
+      mainSubtitle.textContent = `${currentSubcategory} • Diseños disponibles`;
+      currentRoute.textContent = `${currentProduct} / ${currentSubcategory}`;
     }
 
-    // --- ACCIONES ---
-    function changeProduct(p) { state.product = p; state.sub = productCatalog[p].categories[0]; resetDesign(); renderAll(); }
-    function changeSub(p, c) { state.product = p; state.sub = c; resetDesign(); renderAll(); }
-    function resetDesign() { state.design = designsDB.find(d => d.subcategory === state.sub && d.products.includes(state.product)) || designsDB[0]; }
-    function selectDesign(code) { state.design = designsDB.find(d => d.code === code); renderAll(); }
+    function applyProductStyle() {
+  const style = getProductConfig(currentProduct).designStyle;
+  
+  // Aplicamos las coordenadas del catálogo
+  designOverlay.style.width = style.width;
+  designOverlay.style.height = style.height;
+  designOverlay.style.top = style.top;
+  designOverlay.style.left = style.left;
+  
+  // IMPORTANTE: Aseguramos el centrado exacto
+  designOverlay.style.transform = 'translate(-50%, -10%)'; 
+}
 
-    // CARRITO
-    document.getElementById('addToCartBtn').onclick = () => {
-      cart.push({
-        code: state.design.code,
-        product: state.product,
-        name: state.design.name,
-        total: state.design.price,
-        details: `Color: ${state.color}, Talla: ${state.size}`
-      });
-      updateCartUI();
-      alert("¡Producto agregado al carrito!");
-    };
-
-    function updateCartUI() {
-      document.getElementById('cartCount').innerText = cart.length;
-      const total = cart.reduce((acc, item) => acc + item.total, 0);
-      document.getElementById('cartTotal').innerText = `C$ ${total}`;
-    }
-
-    // WHATSAPP (CONSTRUCCIÓN DE MENSAJE COMPLETO)
-    function buildMsg(isFullCart) {
-      const phone = "50585807985";
-      let text = "";
-      
-      if (isFullCart && cart.length > 0) {
-        text = "Hola Bold Prints! Quiero pedir estos productos de mi carrito:%0A%0A";
-        cart.forEach((item, i) => {
-          text += `${i+1}. [${item.code}] ${item.product} - ${item.name}%0A   ${item.details}%0A   Precio: C$ ${item.total}%0A%0A`;
-        });
-        const total = cart.reduce((acc, item) => acc + item.total, 0);
-        text += `*TOTAL A PAGAR: C$ ${total}*`;
-      } else {
-        text = `Hola Bold Prints! Quiero pedir este producto:%0A- Código: [${state.design.code}]%0A- Producto: ${state.product}%0A- Diseño: ${state.design.name}%0A- Detalle: ${state.color}, Talla ${state.size}%0A- Precio: C$ ${state.design.price}`;
+    function runSearch() {
+      const q = searchInput.value.trim().toLowerCase();
+      if (!q) {
+        searchResultsWrap.innerHTML = `<div class="empty-state">Busca por nombre o categoría.</div>`;
+        return;
       }
-      window.open(`https://wa.me/${phone}?text=${text}`, '_blank');
+      const results = designsDB.filter(d => 
+        d.name.toLowerCase().includes(q) || d.subcategory.toLowerCase().includes(q)
+      );
+      if (!results.length) {
+        searchResultsWrap.innerHTML = `<div class="empty-state">No se encontraron resultados.</div>`;
+        return;
+      }
+      searchResultsWrap.innerHTML = `<div class="search-results">` + results.map(r => `
+        <div class="result-item" onclick="selectDesignFromSearch('${r.name}')">
+          <div class="result-head">
+            <img src="${r.image}">
+            <div><strong>${r.name}</strong><br><small>${r.subcategory}</small></div>
+          </div>
+        </div>
+      `).join('') + `</div>`;
+      const resultsSection = document.getElementById('searchResultsWrap');
+  if (resultsSection) {
+    resultsSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
     }
 
-    document.getElementById('whatsappBtn').onclick = () => buildMsg(false);
-    document.getElementById('sendCartBtn').onclick = () => buildMsg(true);
-    document.getElementById('floatingWhatsappBtn').onclick = () => buildMsg(cart.length > 0);
-
-    // BUSCADOR
-    document.getElementById('searchButton').onclick = () => {
-      const q = document.getElementById('searchInput').value.toLowerCase();
-      const found = designsDB.find(d => d.code.toLowerCase().includes(q) || d.name.toLowerCase().includes(q));
+    function selectDesignFromSearch(name) {
+      const found = designsDB.find(d => d.name === name);
       if (found) {
-        state.product = found.products[0];
-        state.sub = found.subcategory;
+        currentSubcategory = found.subcategory;
         state.design = found;
         renderAll();
-      } else { alert("No se encontró ningún producto con ese código o nombre."); }
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+
+    // --- EVENTOS ---
+
+    whatsappBtn.onclick = () => window.open(`https://wa.me/50585807985?text=${buildOrderText()}`, '_blank');
+    floatingWhatsappBtn.onclick = () => window.open(`https://wa.me/50585807985?text=${buildCartText()}`, '_blank');
+    sendCartBtn.onclick = () => window.open(`https://wa.me/50585807985?text=${buildCartText()}`, '_blank');
+    addToCartBtn.onclick = addCurrentProductToCart;
+
+    copyBtn.onclick = async () => {
+      const text = summary.innerText;
+      try {
+        await navigator.clipboard.writeText(text);
+        copyBtn.textContent = '¡Copiado!';
+        setTimeout(() => copyBtn.textContent = 'Copiar pedido', 2000);
+      } catch (e) { alert(text); }
     };
 
-    // Cierre de menús
+    qtyMinus.onclick = () => { if (state.quantity > 1) { state.quantity--; qtyInput.value = state.quantity; updatePreview(); } };
+    qtyPlus.onclick = () => { state.quantity++; qtyInput.value = state.quantity; updatePreview(); };
+    qtyInput.oninput = () => { state.quantity = Math.max(1, Number(qtyInput.value) || 1); updatePreview(); };
+
+    searchInput.addEventListener('input', runSearch);
+    searchForm.onsubmit = (e) => { e.preventDefault(); runSearch(); };
+
+    function renderAll(keepMenuOpen = true) {
+      ensureActiveDesign();
+      renderMenus();
+      renderProductPills();
+      renderColors();
+      renderSizes();
+      renderGallery();
+      renderSelectedDesignLabel();
+      updatePreview();
+    }
+
     document.addEventListener('click', (e) => {
-      if (!e.target.closest('.menu-item')) document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('open'));
+      if (!productMenus.contains(e.target)) {
+        productMenus.querySelectorAll('.menu-item').forEach(i => i.classList.remove('open'));
+      }
     });
 
     renderAll();
+    renderCart();
+    if (searchButton) {
+      searchButton.addEventListener('click', (event) => {
+        event.preventDefault(); 
+        event.stopPropagation();
+        runSearch(); 
+      });
+    }
   </script>
 </body>
 </html>
