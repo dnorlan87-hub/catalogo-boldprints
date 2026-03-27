@@ -204,33 +204,24 @@
       object-fit: contain;
       object-position: center; filter: drop-shadow(0 18px 22px rgba(0,0,0,.14)); }
     .design-overlay {
-  position: absolute;
-  width: 26%; 
-  height: 26%; 
-  top: 50%; 
-  left: 50%; 
-  transform: translate(-50%, -50%); /* Ajustado para centrar X e Y */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  pointer-events: none;
-  z-index: 2;
-}
+      position: absolute;
+      width: 26%; height: 26%; top: 50%; left: 50%; transform: translateX(-50%, -50%);
+      display: grid; place-items: center; pointer-events: none; z-index: 2;
+    }
     #designImage {
       width: 100%; height: 100%; object-fit: contain; display: block;
       opacity: 0.88; mix-blend-mode: multiply; filter: saturate(0.95) contrast(0.95);
     }
 
     .gallery-grid {
-  display: flex;
-  gap: 12px;
-  margin-top: 16px;
-  overflow-x: auto; /* Scroll habilitado */
-  overflow-y: hidden;
-  padding: 10px 5px;
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch; /* Suavidad en móviles */
-}
+      display: flex;
+      gap: 12px;
+      margin-top: 16px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding-bottom: 6px;
+      scroll-behavior: smooth;
+    }
 
     .gallery-grid::-webkit-scrollbar {
       width: 8px;
@@ -250,38 +241,26 @@
       background: #94a3b8;
     }
     .thumb {
-  flex: 0 0 110px; /* Evita que las miniaturas se encojan */
-  border: 1px solid var(--line);
-  border-radius: 14px;
-  padding: 10px;
-  background: #fff;
-  cursor: pointer;
-  transition: .2s ease;
-  text-align: center;
-  font-size: 11px;
-}
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 10px;
+      background: #fff;
+      cursor: pointer;
+      transition: .2s ease;
+      text-align: center;
+      font-size: 13px;
+      min-height: 126px;
+    }
     .thumb:hover, .thumb.active {
       border-color: var(--dark);
       transform: translateY(-1px);
       box-shadow: 0 8px 18px rgba(0,0,0,.08);
     }
     .thumb-img {
-  width: 100%; 
-  height: 80px; /* Un poco más de aire */
-  margin-bottom: 8px; 
-  border-radius: 12px;
-  display: flex; /* Cambiado de grid a flex */
-  justify-content: center;
-  align-items: center;
-  border: 1px solid var(--line); 
-  overflow: hidden; 
-  background: #fff;
-}
-    .thumb-img img { 
-  max-width: 100%; 
-  max-height: 100%; 
-  object-fit: contain; /* Esto evita que se corte la imagen */
-}
+      width: 100%; height: 74px; margin-bottom: 8px; border-radius: 12px;
+      display: grid; place-items: center; border: 1px solid var(--line); overflow: hidden; background: #fff;
+    }
+    .thumb-img img { width: 100%; height: 100%; object-fit: contain; }
 
     .product-pills, .option-row { display: flex; flex-wrap: wrap; gap: 10px; }
     .pill, .swatch, .size-btn {
@@ -769,7 +748,7 @@
 
     const designsDB = [
       { name: 'Huntrix Neon', keyword: 'huntrix neon', subcategory: 'Huntrix', image: 'img/diseno1.png', price: 450, products: ['Camisetas', 'Tazas', 'Mousepads', 'Tazas mágicas'] },
-      { name: 'Goku y Vegueta', keyword: 'Goku Vegueta', subcategory: 'Anime', image: 'img/goku.png', price: 350, products: ['Camisetas'] },
+      { name: 'Huntrix Star', keyword: 'huntrix star', subcategory: 'Huntrix', image: 'img/diseno2.png', price: 470, products: ['Camisetas', 'Tazas'] },
       { name: 'Huntrix Stage', keyword: 'huntrix stage', subcategory: 'Huntrix', image: 'img/diseno3.png', price: 460, products: ['Camisetas', 'Mousepads'] },
       { name: 'Capibara Love', keyword: 'capibara capybara', subcategory: 'Capibara', image: 'img/taza-capibara-love1.jpg', price: 100, products: ['Tazas'], mugMockup: 'img/taza-capibara-love1.jpg' },
       { name: 'Jujutsu Kaisen Gojo', keyword: 'jujutsu kaisen gojo anime', subcategory: 'Anime', image: 'img/diseno6.png', price: 450, products: ['Camisetas', 'Tazas', 'Mousepads', 'Tazas mágicas', 'Rompecabezas'] },
@@ -1107,17 +1086,12 @@
     }
 
     function applyProductStyle() {
-  const style = getProductConfig(currentProduct).designStyle;
-  
-  // Aplicamos las coordenadas del catálogo
-  designOverlay.style.width = style.width;
-  designOverlay.style.height = style.height;
-  designOverlay.style.top = style.top;
-  designOverlay.style.left = style.left;
-  
-  // IMPORTANTE: Aseguramos el centrado exacto
-  designOverlay.style.transform = 'translate(-50%, -10%)'; 
-}
+      const style = getProductConfig(currentProduct).designStyle;
+      designOverlay.style.width = style.width;
+      designOverlay.style.height = style.height;
+      designOverlay.style.top = style.top;
+      designOverlay.style.left = style.left;
+    }
 
     function runSearch() {
       const q = searchInput.value.trim().toLowerCase();
@@ -1140,10 +1114,6 @@
           </div>
         </div>
       `).join('') + `</div>`;
-      const resultsSection = document.getElementById('searchResultsWrap');
-  if (resultsSection) {
-    resultsSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  }
     }
 
     function selectDesignFromSearch(name) {
@@ -1198,13 +1168,6 @@
 
     renderAll();
     renderCart();
-    if (searchButton) {
-      searchButton.addEventListener('click', (event) => {
-        event.preventDefault(); 
-        event.stopPropagation();
-        runSearch(); 
-      });
-    }
   </script>
 </body>
 </html>
