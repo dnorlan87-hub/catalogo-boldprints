@@ -204,10 +204,17 @@
       object-fit: contain;
       object-position: center; filter: drop-shadow(0 18px 22px rgba(0,0,0,.14)); }
     .design-overlay {
-      position: absolute;
-      width: 26%; height: 26%; top: 50%; left: 50%; transform: translateX(-50%, -50%);
-      display: grid; place-items: center; pointer-events: none; z-index: 2;
-    }
+  position: absolute;
+  width: 26%;
+  height: 26%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  z-index: 2;
+}
     #designImage {
       width: 100%; height: 100%; object-fit: contain; display: block;
       opacity: 0.88; mix-blend-mode: multiply; filter: saturate(0.95) contrast(0.95);
@@ -679,7 +686,7 @@
             'Rosado': 'img/camiseta-rosada.png'
           }
         },
-        designStyle: { width: '35%', height: '30%', top: '25%', left: '50%' },
+        designStyle: { width: '30%', height: '30%', top: '42%', left: '50%' },
         categories: {
           'Entretenimiento': ['Anime', 'Caricaturas', 'Deportes', 'Música', 'Películas', 'Series', 'Videojuegos'],
           'Por temporada': ['Año Nuevo', 'Halloween', 'Navidad', 'Día del Amor y la Amistad'],
@@ -1086,12 +1093,13 @@
     }
 
     function applyProductStyle() {
-      const style = getProductConfig(currentProduct).designStyle;
-      designOverlay.style.width = style.width;
-      designOverlay.style.height = style.height;
-      designOverlay.style.top = style.top;
-      designOverlay.style.left = style.left;
-    }
+  const style = getProductConfig(currentProduct).designStyle;
+  designOverlay.style.width = style.width;
+  designOverlay.style.height = style.height;
+  designOverlay.style.top = style.top;
+  designOverlay.style.left = style.left;
+  designOverlay.style.transform = 'translate(-50%, -50%)';
+}
 
     function runSearch() {
       const q = searchInput.value.trim().toLowerCase();
